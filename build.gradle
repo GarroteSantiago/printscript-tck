@@ -24,6 +24,7 @@ java {
 test {
     minHeapSize = "5m" // initial heap size
     maxHeapSize = "7m" // maximum heap size
+    forkEvery=1
 }
 
 dependencies {

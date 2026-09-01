@@ -30,26 +30,25 @@ public final class InterpreterAdapter implements PrintScriptInterpreter {
             ErrorHandler handler,
             InputProvider provider) {
         Reader reader = new InputStreamReader(src, StandardCharsets.UTF_8);
-        InputPort input =
-                prompt -> {
-                    emitter.print(prompt);
-                    return provider.input(prompt);
-                };
+        InputPort input = prompt -> {
+            emitter.print(prompt);
+            return provider.input(prompt);
+        };
         EnvironmentPort env = name -> Optional.ofNullable(System.getenv(name));
         // Reserved so that, on OutOfMemoryError, releasing it guarantees enough
         // headroom for the catch block itself to report the error.
-        byte[] reserve = new byte[2 * 1024 * 1024];
+        byte[] reserve = new byte[2500000];
 
         try {
-            CommandResult<RuntimeEnvironment> result =
-                    printScript.execute(
-                            reader, LanguageVersion.parse(version), emitter::print, input, env, ProgressReporter.NONE);
+            CommandResult<RuntimeEnvironment> result = printScript.execute(
+                    reader, LanguageVersion.parse(version), emitter::print, input, env, ProgressReporter.NONE);
 
             if (!result.isSuccess()) {
                 result.diagnostics().forEach(diagnostic -> handler.reportError(diagnostic.message()));
             }
         } catch (OutOfMemoryError oom) {
             reserve = null;
+            System.gc();
             handler.reportError(oom.getMessage());
         }
     }
