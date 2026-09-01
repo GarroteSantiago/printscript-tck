@@ -23,12 +23,20 @@ java {
 }
 
 test {
-    minHeapSize = "5m" // initial heap size
-    maxHeapSize = "7m" // maximum heap size
+    minHeapSize = "2m" // initial heap size
+    maxHeapSize = "8m" // maximum heap size
+    forkEvery = 1
 }
 
 dependencies {
     testImplementation 'junit:junit:4.13.1'
+
+    implementation 'org.printscript:application:1.1.0'
+    implementation 'org.printscript:interpreter:1.1.0'
+    implementation 'org.printscript:formatter:1.1.0'
+    implementation 'org.printscript:analyzer:1.1.0'
+    implementation 'org.printscript:diagnostics:1.1.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
 }
 
 test {
