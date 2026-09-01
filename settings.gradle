@@ -1,4 +1,2 @@
 rootProject.name = 'printscript-tck'
 
-includeBuild('/home/garro/dev/faculty/ingsis/printscript')
-
