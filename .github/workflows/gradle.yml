@@ -3,7 +3,7 @@
 
 name: Java CI with Gradle
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
@@ -23,5 +23,5 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
         env:
-          USERNAME: GarroteSantiago
+          USERNAME: <your-username>
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
