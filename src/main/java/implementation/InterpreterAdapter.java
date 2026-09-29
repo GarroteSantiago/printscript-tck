@@ -12,11 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.printscript.application.CommandResult;
+import org.printscript.application.EnvironmentSource;
+import org.printscript.application.InputSource;
 import org.printscript.application.LanguageVersion;
 import org.printscript.application.PrintScript;
 import org.printscript.application.ProgressReporter;
-import org.printscript.interpreter.EnvironmentPort;
-import org.printscript.interpreter.InputPort;
 import org.printscript.interpreter.RuntimeEnvironment;
 
 public final class InterpreterAdapter implements PrintScriptInterpreter {
@@ -30,11 +30,11 @@ public final class InterpreterAdapter implements PrintScriptInterpreter {
             ErrorHandler handler,
             InputProvider provider) {
         Reader reader = new InputStreamReader(src, StandardCharsets.UTF_8);
-        InputPort input = prompt -> {
+        InputSource input = prompt -> {
             emitter.print(prompt);
             return provider.input(prompt);
         };
-        EnvironmentPort env = name -> Optional.ofNullable(System.getenv(name));
+        EnvironmentSource env = name -> Optional.ofNullable(System.getenv(name));
         // Reserved so that, on OutOfMemoryError, releasing it guarantees enough
         // headroom for the catch block itself to report the error.
         byte[] reserve = new byte[2500000];
