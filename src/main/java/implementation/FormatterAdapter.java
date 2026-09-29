@@ -10,11 +10,11 @@ import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
-import org.printscript.application.CommandResult;
-import org.printscript.application.JsonPrintScriptConfigReader;
-import org.printscript.application.LanguageVersion;
-import org.printscript.application.PrintScript;
-import org.printscript.application.ProgressReporter;
+import org.printscript.toolchain.CommandResult;
+import org.printscript.toolchain.JsonPrintScriptConfigReader;
+import org.printscript.toolchain.LanguageVersion;
+import org.printscript.toolchain.PrintScript;
+import org.printscript.toolchain.ProgressReporter;
 import org.printscript.formatter.FormatterConfigProvider;
 
 public final class FormatterAdapter implements PrintScriptFormatter {

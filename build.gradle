@@ -30,7 +30,7 @@ test {
 dependencies {
     testImplementation 'junit:junit:4.13.1'
 
-    implementation 'org.printscript:application:1.1.0'
+    implementation 'org.printscript:toolchain:1.1.0'
     implementation 'org.printscript:interpreter:1.1.0'
     implementation 'org.printscript:formatter:1.1.0'
     implementation 'org.printscript:analyzer:1.1.0'

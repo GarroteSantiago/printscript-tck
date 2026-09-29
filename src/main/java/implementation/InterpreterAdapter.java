@@ -11,12 +11,12 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
-import org.printscript.application.CommandResult;
-import org.printscript.application.EnvironmentSource;
-import org.printscript.application.InputSource;
-import org.printscript.application.LanguageVersion;
-import org.printscript.application.PrintScript;
-import org.printscript.application.ProgressReporter;
+import org.printscript.toolchain.CommandResult;
+import org.printscript.toolchain.EnvironmentSource;
+import org.printscript.toolchain.InputSource;
+import org.printscript.toolchain.LanguageVersion;
+import org.printscript.toolchain.PrintScript;
+import org.printscript.toolchain.ProgressReporter;
 import org.printscript.interpreter.RuntimeEnvironment;
 
 public final class InterpreterAdapter implements PrintScriptInterpreter {
