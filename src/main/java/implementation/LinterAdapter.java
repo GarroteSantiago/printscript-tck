@@ -9,12 +9,12 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 import org.printscript.analyzer.AnalyzerConfig;
+import org.printscript.toolchain.AnalysisResult;
 import org.printscript.toolchain.CommandResult;
 import org.printscript.toolchain.JsonPrintScriptConfigReader;
 import org.printscript.toolchain.LanguageVersion;
 import org.printscript.toolchain.PrintScript;
 import org.printscript.toolchain.ProgressReporter;
-import org.printscript.diagnostics.Diagnostic;
 
 public final class LinterAdapter implements PrintScriptLinter {
     private final PrintScript printScript = new PrintScript();
@@ -25,15 +25,18 @@ public final class LinterAdapter implements PrintScriptLinter {
         Reader reader = new InputStreamReader(src, StandardCharsets.UTF_8);
         AnalyzerConfig analyzerConfig = configReader.readAnalyzerConfig(config);
 
-        CommandResult<java.util.List<Diagnostic>> result =
+        // Analyzer findings stream straight to the handler; if the source can't be analyzed
+        // (a syntax or semantic error), report the errors that stopped it instead.
+        CommandResult<AnalysisResult> result =
                 printScript.analyze(
                         reader,
                         LanguageVersion.parse(version),
                         analyzerConfig,
+                        diagnostic -> handler.reportError(diagnostic.message()),
                         ProgressReporter.NONE);
 
-        // .diagnostics() covers both real syntax/semantic failures and analyzer-rule
-        // violations (StaticAnalyzer reports at ERROR severity, same as failures).
-        result.diagnostics().forEach(diagnostic -> handler.reportError(diagnostic.message()));
+        if (!result.isSuccess()) {
+            result.diagnostics().forEach(diagnostic -> handler.reportError(diagnostic.message()));
+        }
     }
 }
